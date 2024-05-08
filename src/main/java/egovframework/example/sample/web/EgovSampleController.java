@@ -94,9 +94,11 @@ public class EgovSampleController {
 	@RequestMapping(value = "/egovSampleList.do")
 	public String selectSampleList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
 
+		System.out.println("eclipse commit");
 		String foo = "1";
 		String api_key = "2";
-		System.out.println("updateSample.do"+"+"+foo+"+"+api_key);
+		System.out.println("react(axios) -> 8080(egovSampleList.do)"+"+"+foo+"+"+api_key);
+		
 		/** EgovPropertyService.sample */
 		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		searchVO.setPageSize(propertiesService.getInt("pageSize"));
