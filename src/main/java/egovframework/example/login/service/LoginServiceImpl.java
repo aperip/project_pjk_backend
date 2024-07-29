@@ -1,5 +1,6 @@
 package egovframework.example.login.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,17 @@ public class LoginServiceImpl implements LoginService{
 
 	 @Override
 	    public Login login(String memberId, String memberPw) {
-	        Optional<Login> optionalUser = loginRepository.findByMemberIdAndMemberPw(memberId, memberPw);
-	        return optionalUser.orElse(null);
+		    Optional<Login> optionalUser = loginRepository.findByMemberIdAndMemberPw(memberId, memberPw);
+		    
+		    List<Login> test= loginRepository.findAll();
+		    
+		    if (optionalUser.isPresent()) {
+		        System.out.println("User found: " + optionalUser.get());
+		    } else {
+		        System.out.println("User not found with MemberId: " + memberId + " and MemberPw: " + memberPw);
+		    }
+		    
+		    return optionalUser.orElse(null);
 	    }
 	
 

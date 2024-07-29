@@ -1,5 +1,6 @@
 package egovframework.example.login.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,26 +12,33 @@ import javax.persistence.Table;
 public class Login {
 	
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	
-	private int memberSeq;
-	
-	private String memberId;
-	
-	private String memberPw;
-	
-	private String memberName;
-	
-	private String memberNname;
-	
-	private String createId;
-	
-	private String createDate;
-	
-	private String updateId;
-	
-	private String updateDate;
+	   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_SEQ")
+    private int memberSeq;
+
+    @Column(name = "CREATE_DATE")
+    private String createDate;
+
+    @Column(name = "CREATE_ID")
+    private String createId;
+
+    @Column(name = "MEMBER_ID")
+    private String memberId;
+
+    @Column(name = "MEMBER_NAME")
+    private String memberName;
+
+    @Column(name = "MEMBER_NNAME")
+    private String memberNname;
+
+    @Column(name = "MEMBER_PW")
+    private String memberPw;
+
+    @Column(name = "UPDATE_DATE")
+    private String updateDate;
+
+    @Column(name = "UPDATE_ID")
+    private String updateId;
 
 	public int getMemberSeq() {
 		return memberSeq;
