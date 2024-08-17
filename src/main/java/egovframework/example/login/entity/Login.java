@@ -15,7 +15,7 @@ public class Login {
 	   @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_SEQ")
     private int memberSeq;
-
+   
     @Column(name = "CREATE_DATE")
     private String createDate;
 
