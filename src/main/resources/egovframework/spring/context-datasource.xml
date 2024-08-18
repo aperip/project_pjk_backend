@@ -4,14 +4,18 @@
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-        http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/jdbc  
+        http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+        http://www.springframework.org/schema/data/jpa 
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    ">
 
 	<!-- 테스트 실행용 -->
 	<!-- <jdbc:embedded-database id="dataSource" type="HSQL"> <jdbc:script location= 
 		"classpath:/db/sampledb.sql"/> </jdbc:embedded-database> -->
-
-
 	<!-- hsql (테스트용 메모리 DB) <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
 		destroy-method="close"> <property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/> 
 		<property name="url" value="jdbc:log4jdbc:hsqldb:hsql://localhost/sampledb"/> 
@@ -21,34 +25,40 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://127.0.0.1:3306/testpjk" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/project_pjk" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
 
 	<!-- Hibernate JPA 설정 -->
 	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan"
-			value="egovframework.example.login.entity" /> <!-- Entity 클래스 패키지 -->
-		<property name="jpaVendorAdapter">
-			<bean
-				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- 애플리케이션 시작 시 DB 스키마 자동 생성 옵션 -->
-				<prop key="hibernate.show_sql">true</prop> <!-- Hibernate가 생성하는 SQL을 콘솔에 출력 -->
-				<prop key="hibernate.format_sql">true</prop> <!-- SQL 포맷을 보기 좋게 출력 -->
-			</props>
-		</property>
-	</bean>
-
+      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="packagesToScan" value="egovframework.*" />
+    <!-- thread.common.entity, egovframework.thread.login.entity, egovframework.thread.user.entity, egovframework.example.login.entity -->
+    <property name="jpaVendorAdapter">
+        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+    </property>
+    <property name="jpaProperties">
+        <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.format_sql">true</prop>
+            <prop key="hibernate.use_sql_comments">true</prop>
+            <!-- Hibernate 5.x 이후 highlight_sql 속성은 지원되지 않을 수 있음 -->
+            <!--<prop key="hibernate.highlight_sql">true</prop>-->
+        </props>
+    </property>
+</bean>
+	<!-- 
+	<jpa:repositories base-package="egovframework.example.login.repository" />
+	<jpa:repositories base-package="egovframework.thread.user.repository" />
+	-->
+	<jpa:repositories base-package="egovframework.*" />
+	<context:component-scan base-package="egovframework" />
+	
 	<!-- 트랜잭션 관리 설정 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -69,11 +79,11 @@
 
 	<bean id="sqlSessionTemplate"
 		class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />``````````
+		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>  -->
 
 	<!-- Component Scanning -->
-<!-- 	<context:component-scan base-package="egovframework.example" /> -->
+ 	<!-- <context:component-scan base-package="egovframework" /> -->
 
 
 	<!-- oracle (POM에서 commons-dbcp, ojdbc(라이센스 사항으로 별도로 배포되지 않음) 관련 라이브러리 설정) 

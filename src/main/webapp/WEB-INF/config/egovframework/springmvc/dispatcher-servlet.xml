@@ -17,7 +17,7 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="egovframework.example">
+    <context:component-scan base-package="egovframework.*">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
@@ -101,12 +101,14 @@
     </bean>
     
     <jpa:repositories base-package="egovframework.example.login.repository" />
+    <jpa:repositories base-package="egovframework.thread.login.repository" />
+    <jpa:repositories base-package="egovframework.thread.user.repository" />
     
     <import resource="classpath:egovframework/spring/context-datasource.xml" />
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="egovframework.example.login.entity" />
+        <property name="packagesToScan" value="egovframework.*" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true"/>
