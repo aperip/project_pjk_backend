@@ -17,10 +17,11 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="egovframework.*">
+    <context:component-scan base-package="egovframework">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.egovframe.rte.psl.dataaccess.mapper.Mapper"/>
     </context:component-scan>
 
     <mvc:annotation-driven/>

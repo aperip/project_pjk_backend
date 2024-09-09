@@ -9,7 +9,6 @@
     <select id="checkUser" resultType="egovframework.example.login.entity.Login">
         SELECT *
         FROM pjk_member
-        WHERE memberId = #{memberId} AND memberPw = #{memberPw}
     </select>
 
 </mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.thread.timeLine.repository.TimeLineRepository">
+       
+       <resultMap id="TimeLineResultMap" type="egovframework.thread.timeLine.entity.TimeLine">
+        <result property="timelineSeq" column="TIMELINE_SEQ"/>
+        <result property="timelineNo" column="TIMELINE_NO"/>
+        <result property="timelineType" column="TIMELINE_TYPE"/>
+        <result property="timelineTitle" column="TIMELINE_TITLE"/>
+        <result property="timelineContents" column="TIMELINE_CONTENTS"/>
+        <result property="timelineLikeCnt" column="TIMELINE_LIKE_CNT"/>
+        <result property="timelineViewCnt" column="TIMELINE_VIEW_CNT"/>
+        <result property="timelineShareCnt" column="TIMELINE_SHARE_CNT"/>
+        <result property="bbsBookmarkCnt" column="BBS_BOOKMARK_CNT"/>
+        <result property="createId" column="CREATE_ID"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateId" column="UPDATE_ID"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+    </resultMap>
+
+    <select id="getTimeLineAll" resultMap="TimeLineResultMap">
+        SELECT 
+		    TIMELINE_SEQ,
+		    TIMELINE_NO,
+		    TIMELINE_TYPE,
+		    TIMELINE_TITLE,
+		    TIMELINE_CONTENTS,
+		    TIMELINE_LIKE_CNT,
+		    TIMELINE_VIEW_CNT,
+		    TIMELINE_SHARE_CNT,
+		    BBS_BOOKMARK_CNT,
+		    CREATE_ID,
+		    CREATE_DATE,
+		    UPDATE_ID,
+		    UPDATE_DATE
+		FROM PJK_TIMELINE
+		ORDER BY TIMELINE_SEQ,CREATE_DATE DESC
+		LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>

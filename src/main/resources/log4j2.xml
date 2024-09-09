@@ -22,6 +22,18 @@
         <Logger name="org.springframework" level="INFO" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
+        
+        <!-- SQL 쿼리 로그 (MyBatis) -->
+	    <Logger name="org.mybatis" level="DEBUG" additivity="false">
+	        <AppenderRef ref="console" />
+	    </Logger>
+	
+	    <!-- MyBatis 매퍼 로드 관련 로그 -->
+	    <Logger name="org.apache.ibatis" level="DEBUG" additivity="false">
+	        <AppenderRef ref="console" />
+	    </Logger>
+        
+        
         <Root level="INFO">
             <AppenderRef ref="console" />
         </Root>

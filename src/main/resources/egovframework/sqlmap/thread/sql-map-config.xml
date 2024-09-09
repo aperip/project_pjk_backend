@@ -2,5 +2,6 @@
 <!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
-	<sqlMap resource="egovframework/mybatis/mapper/UserMapper.xml"/>
+	<sqlMap resource="egovframework/mybatis/mapper/login/LoginMapper.xml"/>
+	<sqlMap resource="egovframework/mybatis/mapper/timeLine/TimeLineMapper.xml"/>
 </sqlMapConfig>
