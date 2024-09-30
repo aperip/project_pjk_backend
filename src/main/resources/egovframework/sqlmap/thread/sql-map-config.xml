@@ -3,5 +3,5 @@
 
 <sqlMapConfig>
 	<sqlMap resource="egovframework/mybatis/mapper/login/LoginMapper.xml"/>
-	<sqlMap resource="egovframework/mybatis/mapper/timeLine/TimeLineMapper.xml"/>
+	<sqlMap resource="egovframework/mybatis/mapper/post/PostMapper.xml"/>
 </sqlMapConfig>

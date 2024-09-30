@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.thread.post.repository.PostRepository">
+       
+	<resultMap id="postResultMap" type="egovframework.thread.post.entity.Post">
+	    <result property="postSeq" column="POST_SEQ"/>
+	    <result property="postNo" column="POST_NO"/>
+	    <result property="postType" column="POST_TYPE"/>
+	    <result property="postTitle" column="POST_TITLE"/>
+	    <result property="postContents" column="POST_CONTENTS"/>
+	    <result property="createId" column="CREATE_ID"/>
+	    <result property="createDate" column="CREATE_DATE"/>
+	    <result property="updateId" column="UPDATE_ID"/>
+	    <result property="updateDate" column="UPDATE_DATE"/>
+	</resultMap>
+	
+	<resultMap id="postEtcResultMap" type="egovframework.thread.post.entity.PostEtc">
+		<result property="postEtcSeq" column="POST_ETC_SEQ"/>
+		<result property="postSeq" column="POST_SEQ"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="likeCnt" column="LIKE_CNT"/>
+		<result property="commentCnt" column="COMMENT_CNT"/>
+		<result property="quoteCnt" column="QUOTE_CNT"/>
+		<result property="createDate" column="CREATE_DATE"/>
+	</resultMap>
+
+    <select id="getPostsAll" resultMap="postResultMap">
+        SELECT 
+		    POST_SEQ,
+			POST_NO,
+			POST_TYPE,
+			POST_TITLE,
+			POST_CONTENTS,
+			CREATE_ID,
+			CREATE_DATE,
+			UPDATE_ID,
+			UPDATE_DATE
+		FROM PJK_POST
+		ORDER BY POST_SEQ,CREATE_DATE DESC
+		LIMIT #{limit} OFFSET #{offset}
+    </select>
+    
+    <select id="getPostEtc" resultMap="postEtcResultMap">
+		SELECT 
+		    A.POST_SEQ,
+		    SUM(A.LIKE_CNT) AS LIKE_CNT,
+		    SUM(A.QUOTE_CNT) AS QUOTE_CNT
+		FROM 
+		    PJK_POST_ETC A
+		where POST_SEQ =#{postSeq}  
+    </select>
+    
+        <!-- 좋아요/인용 카운트 증가 -->
+    <update id="increaseToggle">
+        INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, ${column})
+        VALUES (#{postSeq}, #{userId}, 1)
+        ON DUPLICATE KEY UPDATE ${column} = ${column} + 1
+    </update>
+
+    <!-- 좋아요/인용 카운트 감소 -->
+    <update id="decreaseToggle">
+        INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, ${column})
+        VALUES (#{postSeq}, #{userId}, 0)
+        ON DUPLICATE KEY UPDATE ${column} = GREATEST(${column} - 1, 0)
+    </update>
+
+    
+    
+    
+</mapper>
