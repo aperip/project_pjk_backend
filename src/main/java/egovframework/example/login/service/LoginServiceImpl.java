@@ -13,25 +13,46 @@ import egovframework.example.login.repository.LoginRepository;
 
 @Service
 @Transactional(rollbackFor = { Exception.class }, propagation = Propagation.REQUIRED)
-public class LoginServiceImpl implements LoginService{
-	
-	@Autowired
-	private LoginRepository loginRepository;	
+public class LoginServiceImpl implements LoginService {
 
-	 @Override
-	    public Login login(String memberId, String memberPw) {
-		    Optional<Login> optionalUser = loginRepository.findByMemberIdAndMemberPw(memberId, memberPw);
-		    
-		    List<Login> test= loginRepository.findAll();
-		    
-		    if (optionalUser.isPresent()) {
-		        System.out.println("User found: " + optionalUser.get());
-		    } else {
-		        System.out.println("User not found with MemberId: " + memberId + " and MemberPw: " + memberPw);
-		    }
-		    
-		    return optionalUser.orElse(null);
-	    }
-	
+	@Autowired
+	private LoginRepository loginRepository;
+
+	@Override
+	public Login login(String memberId, String memberPw) {
+		Optional<Login> optionalUser = loginRepository.findByMemberIdAndMemberPw(memberId, memberPw);
+
+//		    List<Login> test= loginRepository.findAll();
+
+		if (optionalUser.isPresent()) {
+			System.out.println("User found: " + optionalUser.get());
+		} else {
+			System.out.println("User not found with MemberId: " + memberId + " and MemberPw: " + memberPw);
+		}
+
+		return optionalUser.orElse(null);
+	}
+
+	@Override
+	public void saveRefreshToken(String memberId, String refreshToken) {
+		Optional<Login> optionalUser = loginRepository.findByMemberId(memberId);
+		if (optionalUser.isPresent()) {
+			Login user = optionalUser.get();
+			user.setRefreshToken(refreshToken); // Login 엔티티에 refreshToken 필드 추가
+			loginRepository.save(user);
+		} else {
+			throw new RuntimeException("User not found with MemberId: " + memberId);
+		}
+
+	}
+
+	@Override
+	public boolean isValidRefreshToken(String memberId, String refreshToken) {
+		Optional<Login> optionalUser = loginRepository.findByMemberId(memberId);
+		if (optionalUser.isPresent()) {// 객체 소유 유무 검사
+			return refreshToken.equals(optionalUser.get().getRefreshToken());
+		}
+		return false;
+	}
 
 }

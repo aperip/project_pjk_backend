@@ -39,6 +39,19 @@ public class Login {
 
     @Column(name = "UPDATE_ID")
     private String updateId;
+    
+    @Column(name ="TOKEN")
+    private String refreshToken;
+    
+    
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
 
 	public int getMemberSeq() {
 		return memberSeq;

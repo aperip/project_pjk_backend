@@ -1,37 +1,98 @@
 package egovframework.example.login.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.example.login.entity.Login;
 import egovframework.example.login.service.LoginService;
+import egovframework.thread.common.util.JwtUtil;
+import egovframework.thread.user.entity.User;
+import egovframework.thread.user.service.UserService;
 
 @Controller
 public class LoginController {
 	
 	 @Autowired
 	    private LoginService loginService;
+	 @Autowired
+	    private UserService userService;
 	 
  	@RequestMapping("/login/loginAct.do")
- 		 public ResponseEntity<Login> login(@RequestBody Login login){
-	 		String memberId = login.getMemberId();
-	        String memberPw = login.getMemberPw();
-	        
-	        Login user = loginService.login(memberId, memberPw);
-	        
-	        return ResponseEntity.ok(user);
-	       
-	    }
- 	
- 	@RequestMapping("/login/test.do")
-	public void test() {
- 		
- 		
- 		System.out.println("테스트 2");
- 	}
-	
+	 public ResponseEntity<?> login(@RequestBody Login login){
+ 		String memberId = login.getMemberId();
+        String memberPw = login.getMemberPw();
+        
+        Login user = loginService.login(memberId, memberPw);
+        if(user != null) {
+        	String aToken = JwtUtil.generateAcessToken(memberId);
+    	    String rToken = JwtUtil.generateRefreshToken(memberId);
+    	    loginService.saveRefreshToken(memberId, rToken);
+    	    
+    	    Map<String, Object> tokens = Map.of(
+                    "aToken", aToken,
+                    "rToken", rToken,
+                    "userInfo", Map.of(
+                        "memberId", user.getMemberId(),
+                        "name", user.getMemberName(),
+                        "nName", user.getMemberNname()
+                    )
+                );
+            
 
+//	        	return ResponseEntity.ok().header("Authorization",  "Bearer " + token).body("로그인 성공");
+            return ResponseEntity.ok(tokens);
+        }else {
+        	return ResponseEntity.status(401).body("로그인 실패: 잘못된 ID 또는 비밀번호");
+        }	        
+      
+    }
+ 	
+ 	  @PostMapping("/login/refreshToken.do")
+ 	    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request) {
+ 	        String rToken = request.get("rToken");
+
+ 	        try {
+ 	            String memberId = JwtUtil.validateToken(rToken).getSubject();
+
+ 	            // RefreshToken이 서버에 저장된 것과 일치하는지 확인
+ 	            if (loginService.isValidRefreshToken(memberId, rToken)) {
+ 	                String newAccessToken = JwtUtil.generateAcessToken(memberId);
+
+ 	                Map<String, String> response = new HashMap<>();
+ 	                response.put("aToken", newAccessToken);
+ 	                return ResponseEntity.ok(response);
+ 	            } else {
+ 	                return ResponseEntity.status(401).body("유효하지 않은 RefreshToken");
+ 	            }
+ 	        } catch (Exception e) {
+ 	            return ResponseEntity.status(401).body("토큰 갱신 실패");
+ 	        }
+ 	    }
+ 	
+ 	@RequestMapping("/login/validToken.do")
+ 	public ResponseEntity<?> validateRefreshToken(@RequestBody Map<String, String> request) {
+ 		 String rToken = request.get("rToken");
+
+ 	    try {
+ 	        // 1. RefreshToken 유효성 검증
+ 	        String memberId = JwtUtil.validateToken(rToken).getSubject();
+
+ 	        // 2. DB에서 RefreshToken 조회 및 검증
+ 	        if (loginService.isValidRefreshToken(memberId, rToken)) {
+ 	            return ResponseEntity.ok(Map.of("isValid", true));
+ 	        } else {
+ 	            return ResponseEntity.status(401).body(Map.of("isValid", false));
+ 	        }
+ 	    } catch (Exception e) {
+ 	        return ResponseEntity.status(401).body(Map.of("isValid", false));
+ 	    }
+ 	}
 }

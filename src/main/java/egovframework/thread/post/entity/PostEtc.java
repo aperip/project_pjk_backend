@@ -32,7 +32,8 @@ public class PostEtc {
 	private String actionType;  // 액션 타입 (like, quote 등)
 	@Transient
     private boolean actionActive;  // true: 액션 활성화, false: 비활성화
-	
+	@Transient
+	private String column; 
 	
 	public int getPostEtcSeq() {
 		return postEtcSeq;
@@ -88,6 +89,13 @@ public class PostEtc {
 	public void setActionActive(boolean actionActive) {
 		this.actionActive = actionActive;
 	}
+	public String getColumn() {
+		return column;
+	}
+	public void setColumn(String column) {
+		this.column = column;
+	}
+	
 	
 
 	

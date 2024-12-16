@@ -33,17 +33,27 @@ public class PostServiceimpl implements PostService{
 
 
     public void toggleIncrease(PostEtc postEtcVo) {
-        String column = getColumnForAction(postEtcVo.getActionType());
-        if (column != null) {
-        	postRepository.increaseToggle(postEtcVo, column);
-        }
+    	 String actionType = postEtcVo.getActionType();
+
+	    if ("like".equals(actionType)) {
+	        postRepository.increaseLike(postEtcVo);
+	    } else if ("quote".equals(actionType)) {
+	        postRepository.increaseQuote(postEtcVo);
+	    } else {
+	        throw new IllegalArgumentException("유효하지 않은 액션 타입입니다.");
+	    }
     }
 
     public void toggleDecrease(PostEtc postEtcVo) {
-        String column = getColumnForAction(postEtcVo.getActionType());
-        if (column != null) {
-        	postRepository.decreaseToggle(postEtcVo, column);
-        }
+    	 String actionType = postEtcVo.getActionType();
+
+ 	    if ("like".equals(actionType)) {
+ 	        postRepository.decreaseLike(postEtcVo);
+ 	    } else if ("quote".equals(actionType)) {
+ 	        postRepository.decreaseQuote(postEtcVo);
+ 	    } else {
+ 	        throw new IllegalArgumentException("유효하지 않은 액션 타입입니다.");
+ 	    }
     }
 
     private String getColumnForAction(String actionType) {

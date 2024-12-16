@@ -52,8 +52,22 @@ public class Post {
     
     @Transient	
 	private int offset;
-	
-	
+    
+    @Transient	
+    private String userId;
+    
+    @Transient	
+ 	private int hasLike;
+    
+    @Transient	
+ 	private int hasComment;
+    
+    @Transient	
+ 	private int hasQuote;
+    
+  
+    
+    
 
 	public int getPostSeq() {
 		return postSeq;
@@ -158,6 +172,39 @@ public class Post {
 	public void setPostEtcVo(PostEtc postEtcVo) {
 		this.postEtcVo = postEtcVo;
 	}
+
+	public int getHasLike() {
+		return hasLike;
+	}
+
+	public void setHasLike(int hasLike) {
+		this.hasLike = hasLike;
+	}
+
+	public int getHasComment() {
+		return hasComment;
+	}
+
+	public void setHasComment(int hasComment) {
+		this.hasComment = hasComment;
+	}
+
+	public int getHasQuote() {
+		return hasQuote;
+	}
+
+	public void setHasQuote(int hasQuote) {
+		this.hasQuote = hasQuote;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
 	
 	
 	

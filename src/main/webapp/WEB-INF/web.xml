@@ -25,6 +25,16 @@
 		<filter-name>HTMLTagFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	
+	<!-- JWT Filter -->
+	<filter>
+	    <filter-name>jwtAuthenticationFilter</filter-name>
+	    <filter-class>egovframework.thread.common.util.JwtAuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>jwtAuthenticationFilter</filter-name>
+	    <url-pattern>/api/protected/*</url-pattern>
+	</filter-mapping>
     
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

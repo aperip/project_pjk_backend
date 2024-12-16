@@ -13,7 +13,9 @@ public interface PostRepository {
 	 List<Post> getPostsAll(Post postVo);
 	 
 	 PostEtc getPostEtc(PostEtc postEtcVo);
-	void increaseToggle(PostEtc postEtcVo, String column);
+	void increaseLike(PostEtc postEtcVo);
+	void increaseQuote(PostEtc postEtcVo);
 
-	void decreaseToggle(PostEtc postEtcVo, String column);
+	void decreaseLike(PostEtc postEtcVo);
+	void decreaseQuote(PostEtc postEtcVo);
 }

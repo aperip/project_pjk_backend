@@ -13,6 +13,9 @@
 	    <result property="createDate" column="CREATE_DATE"/>
 	    <result property="updateId" column="UPDATE_ID"/>
 	    <result property="updateDate" column="UPDATE_DATE"/>
+	    <result property="hasLike" column="HAS_LIKE"/>
+	    <result property="hasComment" column="HAS_COMMENT"/>
+	    <result property="hasQuote" column="HAS_QUOTE"/>
 	</resultMap>
 	
 	<resultMap id="postEtcResultMap" type="egovframework.thread.post.entity.PostEtc">
@@ -26,18 +29,24 @@
 	</resultMap>
 
     <select id="getPostsAll" resultMap="postResultMap">
-        SELECT 
-		    POST_SEQ,
-			POST_NO,
-			POST_TYPE,
-			POST_TITLE,
-			POST_CONTENTS,
-			CREATE_ID,
-			CREATE_DATE,
-			UPDATE_ID,
-			UPDATE_DATE
-		FROM PJK_POST
-		ORDER BY POST_SEQ,CREATE_DATE DESC
+		SELECT 
+		    P.POST_SEQ,
+		    P.POST_NO,
+		    P.POST_TYPE,
+		    P.POST_TITLE,
+		    P.POST_CONTENTS,
+		    P.CREATE_ID,
+		    P.CREATE_DATE,
+		    P.UPDATE_ID,
+		    P.UPDATE_DATE,
+		    CASE WHEN PE.LIKE_CNT > 0 THEN '1' ELSE '0' END AS HAS_LIKE,
+		    CASE WHEN PE.COMMENT_CNT > 0 THEN '1' ELSE '0' END AS HAS_COMMENT,
+		    CASE WHEN PE.QUOTE_CNT > 0 THEN '1' ELSE '0' END AS HAS_QUOTE
+		FROM PJK_POST P
+		LEFT JOIN PJK_POST_ETC PE 
+		    ON P.POST_SEQ = PE.POST_SEQ
+		   AND PE.USER_ID = #{userId}
+		ORDER BY P.POST_SEQ DESC, P.CREATE_DATE DESC
 		LIMIT #{limit} OFFSET #{offset}
     </select>
     
@@ -51,19 +60,30 @@
 		where POST_SEQ =#{postSeq}  
     </select>
     
-        <!-- 좋아요/인용 카운트 증가 -->
-    <update id="increaseToggle">
-        INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, ${column})
-        VALUES (#{postSeq}, #{userId}, 1)
-        ON DUPLICATE KEY UPDATE ${column} = ${column} + 1
-    </update>
-
-    <!-- 좋아요/인용 카운트 감소 -->
-    <update id="decreaseToggle">
-        INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, ${column})
-        VALUES (#{postSeq}, #{userId}, 0)
-        ON DUPLICATE KEY UPDATE ${column} = GREATEST(${column} - 1, 0)
-    </update>
+   <insert id="increaseLike">
+	    INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, LIKE_CNT)
+	    VALUES (#{postSeq}, #{userId}, 1)
+	    ON DUPLICATE KEY UPDATE LIKE_CNT = LIKE_CNT + 1
+	</insert>
+	
+	<insert id="increaseQuote">
+	    INSERT INTO pjk_post_etc (POST_SEQ, USER_ID, QUOTE_CNT)
+	    VALUES (#{postSeq}, #{userId}, 1)
+	    ON DUPLICATE KEY UPDATE QUOTE_CNT = QUOTE_CNT + 1
+	</insert>
+	
+	<update id="decreaseLike">
+	    UPDATE pjk_post_etc
+	    SET LIKE_CNT = 0
+	    WHERE POST_SEQ = #{postSeq} AND USER_ID = #{userId}
+	</update>
+	
+	<update id="decreaseQuote">
+	    UPDATE pjk_post_etc
+	    SET QUOTE_CNT = 0
+	    WHERE POST_SEQ = #{postSeq} AND USER_ID = #{userId}
+	</update>
+	
 
     
     
