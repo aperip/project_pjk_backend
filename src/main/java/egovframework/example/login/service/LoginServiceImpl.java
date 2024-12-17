@@ -19,36 +19,36 @@ public class LoginServiceImpl implements LoginService {
 	private LoginRepository loginRepository;
 
 	@Override
-	public Login login(String memberId, String memberPw) {
-		Optional<Login> optionalUser = loginRepository.findByMemberIdAndMemberPw(memberId, memberPw);
+	public Login login(String userId, String userPw) {
+		Optional<Login> optionalUser = loginRepository.findByUserIdAndUserPw(userId, userPw);
 
 //		    List<Login> test= loginRepository.findAll();
 
 		if (optionalUser.isPresent()) {
 			System.out.println("User found: " + optionalUser.get());
 		} else {
-			System.out.println("User not found with MemberId: " + memberId + " and MemberPw: " + memberPw);
+			System.out.println("User not found with UserId: " + userId + " and UserPw: " + userPw);
 		}
 
 		return optionalUser.orElse(null);
 	}
 
 	@Override
-	public void saveRefreshToken(String memberId, String refreshToken) {
-		Optional<Login> optionalUser = loginRepository.findByMemberId(memberId);
+	public void saveRefreshToken(String userId, String refreshToken) {
+		Optional<Login> optionalUser = loginRepository.findByUserId(userId);
 		if (optionalUser.isPresent()) {
 			Login user = optionalUser.get();
 			user.setRefreshToken(refreshToken); // Login 엔티티에 refreshToken 필드 추가
 			loginRepository.save(user);
 		} else {
-			throw new RuntimeException("User not found with MemberId: " + memberId);
+			throw new RuntimeException("User not found with userId: " + userId);
 		}
 
 	}
 
 	@Override
-	public boolean isValidRefreshToken(String memberId, String refreshToken) {
-		Optional<Login> optionalUser = loginRepository.findByMemberId(memberId);
+	public boolean isValidRefreshToken(String userId, String refreshToken) {
+		Optional<Login> optionalUser = loginRepository.findByUserId(userId);
 		if (optionalUser.isPresent()) {// 객체 소유 유무 검사
 			return refreshToken.equals(optionalUser.get().getRefreshToken());
 		}

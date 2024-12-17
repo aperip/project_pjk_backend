@@ -6,9 +6,9 @@ import egovframework.example.login.entity.Login;
 public interface LoginService {
 		
 	
-	Login login(String memberId, String memberPw);
+	Login login(String userId, String userPw);
 
-	void saveRefreshToken(String memberId, String refreshToken);
+	void saveRefreshToken(String userId, String refreshToken);
 
 	boolean isValidRefreshToken(String userId, String refreshToken);
 

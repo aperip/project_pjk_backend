@@ -27,22 +27,22 @@ public class LoginController {
 	 
  	@RequestMapping("/login/loginAct.do")
 	 public ResponseEntity<?> login(@RequestBody Login login){
- 		String memberId = login.getMemberId();
-        String memberPw = login.getMemberPw();
+ 		String userId = login.getUserId();
+        String userPw = login.getUserPw();
         
-        Login user = loginService.login(memberId, memberPw);
+        Login user = loginService.login(userId, userPw);
         if(user != null) {
-        	String aToken = JwtUtil.generateAcessToken(memberId);
-    	    String rToken = JwtUtil.generateRefreshToken(memberId);
-    	    loginService.saveRefreshToken(memberId, rToken);
+        	String aToken = JwtUtil.generateAcessToken(userId);
+    	    String rToken = JwtUtil.generateRefreshToken(userId);
+    	    loginService.saveRefreshToken(userId, rToken);
     	    
     	    Map<String, Object> tokens = Map.of(
                     "aToken", aToken,
                     "rToken", rToken,
                     "userInfo", Map.of(
-                        "memberId", user.getMemberId(),
-                        "name", user.getMemberName(),
-                        "nName", user.getMemberNname()
+                        "userId", user.getUserId(),
+                        "userName", user.getUserName(),
+                        "userNickName", user.getUserNickName()
                     )
                 );
             
@@ -60,11 +60,11 @@ public class LoginController {
  	        String rToken = request.get("rToken");
 
  	        try {
- 	            String memberId = JwtUtil.validateToken(rToken).getSubject();
+ 	            String userId = JwtUtil.validateToken(rToken).getSubject();
 
  	            // RefreshToken이 서버에 저장된 것과 일치하는지 확인
- 	            if (loginService.isValidRefreshToken(memberId, rToken)) {
- 	                String newAccessToken = JwtUtil.generateAcessToken(memberId);
+ 	            if (loginService.isValidRefreshToken(userId, rToken)) {
+ 	                String newAccessToken = JwtUtil.generateAcessToken(userId);
 
  	                Map<String, String> response = new HashMap<>();
  	                response.put("aToken", newAccessToken);
@@ -83,10 +83,10 @@ public class LoginController {
 
  	    try {
  	        // 1. RefreshToken 유효성 검증
- 	        String memberId = JwtUtil.validateToken(rToken).getSubject();
+ 	        String userId = JwtUtil.validateToken(rToken).getSubject();
 
  	        // 2. DB에서 RefreshToken 조회 및 검증
- 	        if (loginService.isValidRefreshToken(memberId, rToken)) {
+ 	        if (loginService.isValidRefreshToken(userId, rToken)) {
  	            return ResponseEntity.ok(Map.of("isValid", true));
  	        } else {
  	            return ResponseEntity.status(401).body(Map.of("isValid", false));

@@ -10,10 +10,10 @@ import egovframework.example.login.entity.Login;
 @Repository
 public interface LoginRepository extends JpaRepository<Login, String> {
 	/** ID/PW 체크 */
-    Optional<Login> findByMemberIdAndMemberPw(String memberId, String memberPw);
+    Optional<Login> findByUserIdAndUserPw(String userId, String userPw);
     /** ID 가져오기 */
-    Optional<Login> findByMemberId(String memberId);
+    Optional<Login> findByUserId(String userId);
     /** refreshTocken */
-    Optional<Login> findByMemberIdAndRefreshToken(String memberId, String refreshToken);
+    Optional<Login> findByUserIdAndRefreshToken(String userId, String refreshToken);
     
 }

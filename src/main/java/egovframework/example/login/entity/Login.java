@@ -8,89 +8,79 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="pjk_member")
+@Table(name="pjk_user")
 public class Login {
 	
 	@Id
 	   @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBER_SEQ")
-    private int memberSeq;
-   
-    @Column(name = "CREATE_DATE")
-    private String createDate;
+	@Column(name="USER_SEQ")
+	private int userSeq;
 
-    @Column(name = "CREATE_ID")
-    private String createId;
+	@Column(name="USER_ID")
+	private String userId;
 
-    @Column(name = "MEMBER_ID")
-    private String memberId;
+	@Column(name="USER_PW")
+	private String userPw;
 
-    @Column(name = "MEMBER_NAME")
-    private String memberName;
+	@Column(name="USER_NAME")
+	private String userName;
 
-    @Column(name = "MEMBER_NNAME")
-    private String memberNname;
+	@Column(name="USER_NICK_NAME")
+	private String userNickName;
 
-    @Column(name = "MEMBER_PW")
-    private String memberPw;
+	@Column(name="CREATE_ID")
+	private String createId;
 
-    @Column(name = "UPDATE_DATE")
-    private String updateDate;
+	@Column(name="CREATE_DATE")
+	private String createDate;
 
-    @Column(name = "UPDATE_ID")
-    private String updateId;
-    
-    @Column(name ="TOKEN")
-    private String refreshToken;
-    
-    
+	@Column(name="UPDATE_ID")
+	private String updateId;
 
-	public String getRefreshToken() {
-		return refreshToken;
+	@Column(name="UPDATE_DATE")
+	private String updateDate;
+
+	@Column(name="REFRESH_TOKEN")
+	private String refreshToken;
+
+	public int getUserSeq() {
+		return userSeq;
 	}
 
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
+	public void setUserSeq(int userSeq) {
+		this.userSeq = userSeq;
 	}
 
-	public int getMemberSeq() {
-		return memberSeq;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setMemberSeq(int memberSeq) {
-		this.memberSeq = memberSeq;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getMemberId() {
-		return memberId;
+	public String getUserPw() {
+		return userPw;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
 
-	public String getMemberPw() {
-		return memberPw;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setMemberPw(String memberPw) {
-		this.memberPw = memberPw;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getMemberName() {
-		return memberName;
+	public String getUserNickName() {
+		return userNickName;
 	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
-
-	public String getMemberNname() {
-		return memberNname;
-	}
-
-	public void setMemberNname(String memberNname) {
-		this.memberNname = memberNname;
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
 	}
 
 	public String getCreateId() {
@@ -124,7 +114,17 @@ public class Login {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-	
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+    
+    
+
 	
 	
 
