@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 @Entity
 @Table(name="pjk_following")
 public class LoginVO {
+
 	@EmbeddedId
 	private LoginCompositeKey followingSeq;
 	///private int followingSeq;

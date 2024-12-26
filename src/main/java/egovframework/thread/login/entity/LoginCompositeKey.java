@@ -2,7 +2,12 @@ package egovframework.thread.login.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embeddable;
 
+import org.hibernate.annotations.Entity;
+
+@Entity
+@Embeddable
 public class LoginCompositeKey implements Serializable {
     private int followingSeq;
     private int memberSeq;

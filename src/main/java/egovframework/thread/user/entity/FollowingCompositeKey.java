@@ -2,10 +2,12 @@ package egovframework.thread.user.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embeddable;
 
 import org.hibernate.annotations.Entity;
 
 @Entity
+@Embeddable
 public class FollowingCompositeKey implements Serializable {
     private int followingSeq;
     private int memberSeq;

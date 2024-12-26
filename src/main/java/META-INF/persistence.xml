@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="testpjk">
 	<!-- context-datasource.xml에 넣음.240713 아래는 예시임. -->
-	<![CDATA[<class>test.com.BbsEntity</class>
+	<persistence-unit name="pjk_login">
 	<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties> 
 			<!-- 필수 속성 --> 
@@ -27,6 +26,6 @@
 			<property name="hibernate.use_sql_comments" value="true"/> <!-- 이 쿼리는 사용자가 insert 했다는 식의 설명 코멘트 -->
 			<property name="hibernate.jdbc.batch_size" value="10"/> <!-- 버퍼링같은 개념으로 value 사이즈만큼 모아서 쿼리를 한번에 보내서 커밋하겠다는 것 -->
 	    </properties>
-	    ]]>
+	    
 	</persistence-unit>
 </persistence>
