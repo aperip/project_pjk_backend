@@ -1,4 +1,4 @@
-package egovframework.example.login.entity;
+package egovframework.thread.login.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

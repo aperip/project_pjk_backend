@@ -1,4 +1,4 @@
-package egovframework.example.login.web;
+package egovframework.thread.login.web;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import egovframework.example.login.entity.Login;
-import egovframework.example.login.service.LoginService;
+import egovframework.thread.login.entity.Login;
+import egovframework.thread.login.service.LoginService;
 import egovframework.thread.common.util.JwtUtil;
 import egovframework.thread.user.entity.User;
 import egovframework.thread.user.service.UserService;

@@ -101,7 +101,6 @@
         </property>
     </bean>
     
-    <jpa:repositories base-package="egovframework.example.login.repository" />
     <jpa:repositories base-package="egovframework.thread.login.repository" />
     <jpa:repositories base-package="egovframework.thread.user.repository" />
     

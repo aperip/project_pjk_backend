@@ -3,6 +3,6 @@
 
 <configuration>
     <typeAliases>	
-    	<typeAlias alias="loginVo" type="egovframework.example.login.entity.Login"/>
+    	<typeAlias alias="loginVo" type="egovframework.thread.login.entity.Login"/>
     </typeAliases>
 </configuration>

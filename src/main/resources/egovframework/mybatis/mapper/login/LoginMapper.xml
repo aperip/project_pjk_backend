@@ -3,10 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="egovframework.example.login.repository.LoginRepository">
+<mapper namespace="egovframework.thread.login.repository.LoginRepository">
 
     <!-- 로그인 사용자 확인 -->
-    <select id="checkUser" resultType="egovframework.example.login.entity.Login">
+    <select id="checkUser" resultType="egovframework.thread.login.entity.Login">
         SELECT *
         FROM pjk_user
     </select>

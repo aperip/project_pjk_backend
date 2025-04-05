@@ -1,7 +1,7 @@
-package egovframework.example.login.service;
+package egovframework.thread.login.service;
 
 
-import egovframework.example.login.entity.Login;
+import egovframework.thread.login.entity.Login;
 
 public interface LoginService {
 		

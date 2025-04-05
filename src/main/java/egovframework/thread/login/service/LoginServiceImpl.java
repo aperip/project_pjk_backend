@@ -1,4 +1,4 @@
-package egovframework.example.login.service;
+package egovframework.thread.login.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import egovframework.example.login.entity.Login;
-import egovframework.example.login.repository.LoginRepository;
+import egovframework.thread.login.entity.Login;
+import egovframework.thread.login.repository.LoginRepository;
 
 @Service
 @Transactional(rollbackFor = { Exception.class }, propagation = Propagation.REQUIRED)
