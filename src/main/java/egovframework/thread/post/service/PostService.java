@@ -14,5 +14,7 @@ public interface PostService {
 
 	void toggleDecrease(PostEtc postEtcVo);
 
+	List<Post> getMyPostsAll(Post postVo);
+
 
 }

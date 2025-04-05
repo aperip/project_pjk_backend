@@ -52,4 +52,16 @@ public class PostController {
 			return ResponseEntity.ok(response);
 		}
 	
+	@RequestMapping("/post/myPost.do")
+	@ResponseBody
+	public List<Post>showMyPostListAll(Post postVo) {
+		
+		  // offset 계산 (몇 번째 데이터부터 가져올지 결정)
+	    int offset = (postVo.getPage() - 1) * postVo.getLimit();
+	    postVo.setOffset(offset);
+		List<Post> allList =  postService.getMyPostsAll(postVo);
+		
+		return allList;
+	}
+	
 }

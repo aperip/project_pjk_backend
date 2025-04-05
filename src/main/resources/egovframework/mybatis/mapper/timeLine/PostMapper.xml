@@ -50,6 +50,29 @@
 		LIMIT #{limit} OFFSET #{offset}
     </select>
     
+    <select id="getMyPostsAll" resultMap="postResultMap">
+		SELECT 
+		    P.POST_SEQ,
+		    P.POST_NO,
+		    P.POST_TYPE,
+		    P.POST_TITLE,
+		    P.POST_CONTENTS,
+		    P.CREATE_ID,
+		    P.CREATE_DATE,
+		    P.UPDATE_ID,
+		    P.UPDATE_DATE,
+		    CASE WHEN PE.LIKE_CNT > 0 THEN '1' ELSE '0' END AS HAS_LIKE,
+		    CASE WHEN PE.COMMENT_CNT > 0 THEN '1' ELSE '0' END AS HAS_COMMENT,
+		    CASE WHEN PE.QUOTE_CNT > 0 THEN '1' ELSE '0' END AS HAS_QUOTE
+		FROM PJK_POST P
+		LEFT JOIN PJK_POST_ETC PE 
+		    ON P.POST_SEQ = PE.POST_SEQ
+		   AND PE.USER_ID = #{userId}
+		WHERE CREATE_ID = #{userId}
+		ORDER BY P.POST_SEQ DESC, P.CREATE_DATE DESC
+		LIMIT #{limit} OFFSET #{offset}
+    </select>
+    
     <select id="getPostEtc" resultMap="postEtcResultMap">
 		SELECT 
 		    A.POST_SEQ,

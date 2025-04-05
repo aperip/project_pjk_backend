@@ -59,11 +59,28 @@ public class PostServiceimpl implements PostService{
     private String getColumnForAction(String actionType) {
         if ("like".equals(actionType)) {
             return "LIKE_CNT";
-        } else if ("quote".equals(actionType)) {
+        } else if ("quote".equals(actionType)) {    
             return "QUOTE_CNT";
         }
         return null;
     }
+
+
+	@Override
+	public List<Post> getMyPostsAll(Post postVo) {
+		
+		List<Post> postList = postRepository.getMyPostsAll(postVo);
+		for(int i=0; i< postList.size(); i++) {
+			PostEtc postEtcVo  = new PostEtc();
+			postEtcVo.setPostSeq(postList.get(i).getPostSeq());
+			
+			postEtcVo = postRepository.getPostEtc(postEtcVo);
+			
+			postList.get(i).setPostEtcVo(postEtcVo);
+		}
+		
+		return postList;
+	}
 
 
 	
