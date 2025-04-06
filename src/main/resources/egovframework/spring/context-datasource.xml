@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
@@ -11,6 +10,8 @@
         http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
         http://www.springframework.org/schema/data/jpa 
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
     ">
 
 	<!-- 테스트 실행용 -->
@@ -24,7 +25,7 @@
 	<!-- Mysql (POM에서 commons-dbcp, mysql-connector-java 관련 라이브러리 설정 ) -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/testpjk" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/project_pjk" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -54,7 +55,8 @@
 	<jpa:repositories base-package="egovframework.example.login.repository" />
 	<jpa:repositories base-package="egovframework.thread.user.repository" />
 	-->
-	<jpa:repositories base-package="egovframework.*" />
+	<jpa:repositories base-package="egovframework.thread.*" />
+	
 	<context:component-scan base-package="egovframework" />
 	
 	<!-- 트랜잭션 관리 설정 -->

@@ -22,7 +22,7 @@
 		<java.version>11</java.version>
         <spring.version>5.3.20</spring.version>
         <egov.version>4.1.0</egov.version>
-        <hibernate.version>5.4.32.Final</hibernate.version>
+        <hibernate.version>5.6.15.Final</hibernate.version>
         <mybatis.version>3.5.6</mybatis.version>
         <jackson.version>2.13.0</jackson.version>
 	</properties>
@@ -114,17 +114,50 @@
         </dependency>
         
         <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>5.3.33</version> <!-- 버전은 프로젝트에 맞게 조정 -->
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-web</artifactId>
+		    <version>5.3.33</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-beans</artifactId>
+		    <version>5.3.33</version>
+		</dependency>
+		
+        <dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-dbcp2</artifactId>
 		    <version>2.9.0</version>
 		</dependency>
-        
         <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>2.7.8</version>
         </dependency>
+        <!-- Spring Data JPA의 NamespaceHandler -->
+        <dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-commons</artifactId>
+		    <version>2.7.8</version>
+		</dependency>
+
+		<!-- Spring Commons Validator -->
+		<dependency>
+		    <groupId>org.springmodules</groupId>
+		    <artifactId>spring-modules-validation</artifactId>
+		    <version>0.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.6</version>
+		</dependency>
 
         <!-- Hibernate (JPA 구현체) -->
         <dependency>
@@ -132,11 +165,11 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <dependency>
+        <!-- 중복일수잇어서 주석 <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>
+        </dependency> -->
 
         <!-- JPA API -->
         <dependency>
